@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Person_DataAndriod</string>
+    <string name="app_text">Please fill the details to sign up</string>
+	<string name="UserName_TextView">User Name</string>
+	<string name="Password_TextView">Password</string>
+	<string name="FullName_TextView">Full Name</string>
+	<string name="Email_TextView">Email</string>
+	
+</resources>
