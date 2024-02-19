@@ -22,13 +22,8 @@ namespace Person_DataAndriod
             obj_email = FindViewById<EditText>(Resource.Id.Email_EditText);
             obj_submit = FindViewById<Button>(Resource.Id.Submit_button);
             
-            //string directoryPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
-            //if (Directory.Exists(directoryPath))
-            //{
-            //    Directory.CreateDirectory(directoryPath);
-            //}
-            string dbPath = Path.Combine("/data/user/0/com.companyname.mymauiapp/files/", "Person_Data.db");
-            Obj_databaseManager = new DatabaseManager(dbPath);
+           
+            Obj_databaseManager = new DatabaseManager();
 
             obj_submit.Click += btnSubmit_Click;
 
@@ -46,6 +41,8 @@ namespace Person_DataAndriod
 
             Obj_databaseManager.InsertUser(signUp);
             Toast.MakeText(this, "Person Data is inserted successfully", ToastLength.Long).Show();
+
+            StartActivity(typeof(AllUserDetails));
         }
     }
 }

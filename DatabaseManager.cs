@@ -12,15 +12,28 @@ namespace Person_DataAndriod
     {
         readonly SQLiteConnection connection;
 
-        public DatabaseManager(string dbPath)
+        public DatabaseManager()
         {
+            string directoryPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.UserProfile);
+            if (Directory.Exists(directoryPath))
+            {
+                Directory.CreateDirectory(directoryPath);
+            }
+            string dbPath = Path.Combine(directoryPath, "Person_Data.db");
+
             connection = new SQLiteConnection(dbPath);
+
             connection.CreateTable<SignUp>();
         }
 
         public void InsertUser(SignUp new_user)
         {
             connection.Insert(new_user);
+        }
+
+        public List<SignUp> GetUsers()
+        {
+            return connection.Table<SignUp>().ToList();
         }
     }
 }
