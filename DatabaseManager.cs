@@ -35,5 +35,11 @@ namespace Person_DataAndriod
         {
             return connection.Table<SignUp>().ToList();
         }
+
+        public void DeleteUser(int User_Id)
+        {
+            connection.Delete<SignUp>(User_Id);
+        }
+
     }
 }
