@@ -5,5 +5,7 @@
 	<string name="Password_TextView">Password</string>
 	<string name="FullName_TextView">Full Name</string>
 	<string name="Email_TextView">Email</string>
+
+	<string name="Update_text">Update Data</string>
 	
 </resources>

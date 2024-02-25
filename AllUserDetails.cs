@@ -1,4 +1,6 @@
 using Android.App;
+using Android.Content;
+using Org.Apache.Commons.Logging;
 using Person_DataAndriod.Models;
 
 namespace Person_DataAndriod;
@@ -21,47 +23,14 @@ public class AllUserDetails : Activity
         obj_editText = FindViewById<EditText>(Resource.Id.editText1);
 
         obj_databaseManager = new DatabaseManager();
-
-         userdetails = obj_databaseManager.GetUsers();
-
-        ArrayAdapter<string> UserDetails_adapter = new ArrayAdapter<string>(this, Android.Resource.Layout.SimpleListItem1);
-
-        foreach (var item in userdetails)
-        {
-            //if(item.FullName == obj_editText.Text)
-            {
-                UserDetails_adapter.Add($"{item.UserName} - {item.FullName} - {item.Email}");
-            }
-            
-        }
-        obj_listview.Adapter = UserDetails_adapter;
+        Display();
+         
         obj_listview.ItemClick += obj_listview_item_Selected;
-
+        Display();
     }
 
-    private void obj_listview_item_Selected(object sender, AdapterView.ItemClickEventArgs e)
+    private void Display()
     {
-        SignUp selectedUser = userdetails[e.Position];
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.SetTitle("Options");
-        builder.SetMessage("Please select one option");
-        builder.SetPositiveButton("Update",(s, a ) =>  UpdateUser(selectedUser));
-        builder.SetNegativeButton("Delete", (s, a) =>  DeleteUser(selectedUser));
-      //  builder.SetNeutralButton("Cancel", (s, a) => dialog.cancel());
-        builder.Show();
-    }
-
-    private void UpdateUser(SignUp user)
-    {
-        Toast.MakeText(this, "Update function is not yet implemented", ToastLength.Long).Show();
-    }
-
-    private void DeleteUser(SignUp user)
-    {
-        obj_databaseManager.DeleteUser(user.Id);
-
-
         userdetails = obj_databaseManager.GetUsers();
 
         ArrayAdapter<string> UserDetails_adapter = new ArrayAdapter<string>(this, Android.Resource.Layout.SimpleListItem1);
@@ -77,10 +46,33 @@ public class AllUserDetails : Activity
         obj_listview.Adapter = UserDetails_adapter;
     }
 
-    private void CancleDialog()
+    private void obj_listview_item_Selected(object sender, AdapterView.ItemClickEventArgs e)
     {
+        SignUp selectedUser = userdetails[e.Position];
 
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.SetTitle("Options");
+        builder.SetMessage("Please select one option");
+        builder.SetPositiveButton("Update",(s, a ) =>  UpdateUser(selectedUser));
+        builder.SetNegativeButton("Delete", (s, a) =>  DeleteUser(selectedUser));
+        // Set the Cancel button with dismiss action
+        builder.SetNeutralButton("Cancel", (s, a) => { ((Dialog)s).Dismiss(); });
+        builder.Show();
     }
+
+    private void UpdateUser(SignUp user)
+    {
+        Intent updateIntent = new Intent(this, typeof(UpdateUserActivity));
+        updateIntent.PutExtra("UserId", user.Id);
+        StartActivity(updateIntent);
+    }
+
+    private void DeleteUser(SignUp user)
+    {
+        obj_databaseManager.DeleteUser(user.Id);
+    }
+
+ 
 
 
 }

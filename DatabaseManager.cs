@@ -41,5 +41,14 @@ namespace Person_DataAndriod
             connection.Delete<SignUp>(User_Id);
         }
 
+        public SignUp GetUserId(int User_Id)
+        {
+            return connection.Table<SignUp>().FirstOrDefault( u => u.Id == User_Id);
+        }
+
+        public void UpdateUser(SignUp Updateuser)
+        {
+            connection.Update(Updateuser);
+        }
     }
 }
