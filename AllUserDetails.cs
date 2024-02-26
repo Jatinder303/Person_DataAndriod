@@ -5,7 +5,7 @@ using Person_DataAndriod.Models;
 
 namespace Person_DataAndriod;
 
-[Activity(Label = "AllUserDetails", MainLauncher = true)]
+[Activity(Label = "AllUserDetails", MainLauncher = false)]
 public class AllUserDetails : Activity
 {
     ListView obj_listview;
@@ -26,6 +26,12 @@ public class AllUserDetails : Activity
         Display();
          
         obj_listview.ItemClick += obj_listview_item_Selected;
+        
+    }
+    protected override void OnResume()
+    {
+        base.OnResume();
+
         Display();
     }
 
@@ -58,6 +64,7 @@ public class AllUserDetails : Activity
         // Set the Cancel button with dismiss action
         builder.SetNeutralButton("Cancel", (s, a) => { ((Dialog)s).Dismiss(); });
         builder.Show();
+        
     }
 
     private void UpdateUser(SignUp user)
@@ -65,11 +72,13 @@ public class AllUserDetails : Activity
         Intent updateIntent = new Intent(this, typeof(UpdateUserActivity));
         updateIntent.PutExtra("UserId", user.Id);
         StartActivity(updateIntent);
+        
     }
 
     private void DeleteUser(SignUp user)
     {
         obj_databaseManager.DeleteUser(user.Id);
+        Display();
     }
 
  

@@ -2,7 +2,7 @@ using Person_DataAndriod.Models;
 
 namespace Person_DataAndriod
 {
-    [Activity(Label = "@string/app_name", MainLauncher = false)]
+    [Activity(Label = "@string/app_name", MainLauncher = true)]
     public class MainActivity : Activity
     {
         EditText? obj_UserName, obj_Password, obj_FullName, obj_email;
